@@ -1,8 +1,8 @@
 package com.ptrprograms.videocall
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -12,11 +12,12 @@ import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 
 
-
+/**
+ *  Known issue: video pauses when clicked on
+ */
 class UsersAdapter(val context: Context, val rtcEngine: RtcEngine, val userSelectedListener: UserSelectedListener) : ListAdapter<Int, UsersAdapter.ViewHolder>(UserDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.e("Test", "onbindviewholder")
         val id = getItem(position)
         holder.apply {
             bind(id, context, rtcEngine, createOnClickListener(id))
@@ -39,17 +40,21 @@ class UsersAdapter(val context: Context, val rtcEngine: RtcEngine, val userSelec
         fun bind(uid: Int, context: Context, rtcEngine: RtcEngine, listener: View.OnClickListener) {
             binding.apply {
                 id = uid
-                userContainer.removeAllViews()
                 clickListener = listener
-                val surfaceView = RtcEngine.CreateRendererView(context)
-                userContainer.addView(surfaceView)
+                val surfaceView : SurfaceView
+                if( userContainer.childCount == 0 ) {
+                    surfaceView = RtcEngine.CreateRendererView(context)
+                    userContainer.addView(surfaceView)
+                } else {
+                    surfaceView = userContainer.getChildAt(0) as SurfaceView
+                }
+
                 if( uid != 0 ) {
                     rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, uid))
                 } else {
-                    rtcEngine.setupLocalVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, 0))
+                    rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, 0))
                 }
 
-                Log.e("Test", "bind")
                 executePendingBindings()
             }
         }
