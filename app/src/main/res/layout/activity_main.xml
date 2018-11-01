@@ -10,8 +10,12 @@
         android:id="@+id/video_container_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@color/colorPrimary"/>
+        android:layout_weight="3">
+        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="You are connected"
+        android:layout_gravity="center"
+        android:gravity="center"/>
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_participants"
@@ -21,7 +25,6 @@
         android:clipToPadding="false"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:background="@color/colorAccent"
         tools:listitem="@layout/list_item_user"/>
 
 </LinearLayout>

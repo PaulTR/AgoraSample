@@ -14,8 +14,6 @@ import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 import io.agora.rtc.video.VideoEncoderConfiguration
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.list_item_user.*
-import java.lang.Exception
 
 /*
     Notes:
@@ -149,6 +147,13 @@ class MainActivity : AppCompatActivity(), UserSelectedListener {
 
     override fun userSelected(uid: Int) {
         showUserOnMainVideo(uid)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if( isFinishing ) {
+            rtcEngine.leaveChannel()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
