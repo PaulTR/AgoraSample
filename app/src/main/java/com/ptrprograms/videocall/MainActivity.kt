@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,12 +17,20 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_item_user.*
 import java.lang.Exception
 
+/*
+    Notes:
+    Goal is to demonstrate usage, not make a feature complete app.
+    Would use viewmodel and Android architecture more, navigation components, toolbar and rx
+ */
 class MainActivity : AppCompatActivity(), UserSelectedListener {
 
     private val PERMISSION_REQ_ID = 22
     private val CHANNEL_NAME = "1000"
     private val userIdList = ArrayList<Int>()
     private lateinit var usersAdapter : UsersAdapter
+
+    private var isMuted = false
+    private var isPaused = false
 
     private lateinit var rtcEngine : RtcEngine
     private val rtcEventHandler = object: IRtcEngineEventHandler() {
@@ -52,10 +62,30 @@ class MainActivity : AppCompatActivity(), UserSelectedListener {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.video_options, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when( item!!.itemId ) {
+            R.id.mute -> {
+                isMuted = !isMuted
+                rtcEngine.muteLocalAudioStream(isMuted)
+            }
+
+            R.id.hide_video -> {
+                isPaused = !isPaused
+                rtcEngine.muteLocalVideoStream(isPaused)
+            }
+        }
+
+        return true
+    }
+
     private fun initAgora() {
         initAgoraEngine()
         initVideoProfile()
-        //initLocalVideo()
         initChannel()
         initViews()
     }
@@ -128,14 +158,11 @@ class MainActivity : AppCompatActivity(), UserSelectedListener {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     initAgora()
                 } else {
-                    //Show a message explaining that they need to grant permissions to use the app
                     finish()
                 }
                 return
             }
-            else -> {
-                // Ignore all other requests.
-            }
+            else -> {}
         }
     }
 }

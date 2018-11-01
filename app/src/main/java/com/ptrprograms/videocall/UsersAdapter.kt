@@ -1,7 +1,6 @@
 package com.ptrprograms.videocall
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +11,9 @@ import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 
 
-
 class UsersAdapter(val context: Context, val rtcEngine: RtcEngine, val userSelectedListener: UserSelectedListener) : ListAdapter<Int, UsersAdapter.ViewHolder>(UserDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.e("Test", "onbindviewholder")
         val id = getItem(position)
         holder.apply {
             bind(id, context, rtcEngine, createOnClickListener(id))
@@ -49,7 +46,6 @@ class UsersAdapter(val context: Context, val rtcEngine: RtcEngine, val userSelec
                     rtcEngine.setupLocalVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, 0))
                 }
 
-                Log.e("Test", "bind")
                 executePendingBindings()
             }
         }
