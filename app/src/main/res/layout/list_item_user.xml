@@ -1,0 +1,18 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="clickListener"
+                type="android.view.View.OnClickListener"/>
+
+        <variable name="id" type="Integer" />
+    </data>
+
+    <FrameLayout
+            android:id="@+id/user_container"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:onClick="@{clickListener}"/>
+</layout>
