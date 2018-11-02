@@ -51,11 +51,7 @@ class UsersAdapter(val context: Context, val rtcEngine: RtcEngine, val userSelec
                     surfaceView = userContainer.getChildAt(0) as SurfaceView
                 }
 
-                if( uid != 0 ) {
-                    rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, uid))
-                } else {
-                    rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, 0))
-                }
+                rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, uid))
 
                 executePendingBindings()
             }
