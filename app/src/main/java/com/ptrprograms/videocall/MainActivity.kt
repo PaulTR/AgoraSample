@@ -19,6 +19,9 @@ import kotlinx.android.synthetic.main.activity_main.*
     Notes:
     Goal is to demonstrate usage, not make a feature complete app.
     Would use viewmodel and Android architecture more, navigation components, toolbar and rx
+
+    Bonus: add screen sharing
+    Status: Not going to happen because of time. Documentation: https://github.com/AgoraIO/Advanced-Video/tree/master/Custom-Media-Device/Agora-Custom-Media-Device-Android/app/src/main/java/io/agora/rtc/mediaio/app/shareScreen
  */
 class MainActivity : AppCompatActivity(), UserSelectedListener {
 

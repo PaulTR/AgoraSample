@@ -1,6 +1,8 @@
 package com.ptrprograms.videocall
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.SurfaceView
 import android.view.View
