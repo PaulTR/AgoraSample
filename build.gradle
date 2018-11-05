@@ -15,7 +15,6 @@ buildscript {
 
         // App dependencies
         gradleVersion = '3.2.0'
-        navigationVersion = '1.0.0-alpha06'
         kotlinVersion = '1.2.71'
         supportLibraryVersion = '1.0.0'
     }
